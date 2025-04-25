@@ -2,6 +2,7 @@ import { Product } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface ProductsPros {
   products: Product[];
@@ -16,12 +17,13 @@ const formatPrice = (price: Decimal | number) => {
 };
 
 const Products = ({ products }: ProductsPros) => {
+  const { slug } = useParams<{ slug: string }>();
   return (
     <div className="space-y-3 px-5">
       {products.map((product) => (
         <Link
           key={product.id}
-          href="/"
+          href={`/${slug}/menu/${product.id}`}
           className="flex items-center justify-between border-b pb-5"
         >
           {/*ESQUERDA*/}
