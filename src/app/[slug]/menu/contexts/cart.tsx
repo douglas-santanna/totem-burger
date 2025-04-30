@@ -35,7 +35,27 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const addProduct = (product: CartProduct) => {
-    setProducts((prev) => [...prev, product]);
+    //setProducts((prev) => [...prev, product]);
+
+    const productExist = products.some(
+      (cartProduct) => cartProduct.id === product.id,
+    );
+    if (!productExist) {
+      return setProducts((prev) => [...prev, product]);
+    }
+
+    setProducts((prevProducts) => {
+      return prevProducts.map((prevProduct) => {
+        if (prevProduct.id === product.id) {
+          console.log(product.quantity);
+          return {
+            ...prevProduct,
+            quantity: product.quantity,
+          };
+        }
+        return prevProduct;
+      });
+    });
   };
   return (
     <CartContext.Provider
