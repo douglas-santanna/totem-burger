@@ -1,20 +1,13 @@
 import { Product } from "@prisma/client";
-import { Decimal } from "@prisma/client/runtime/library";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+import { formatPrice } from "../../../../helpers/format-currency";
+
 interface ProductsPros {
   products: Product[];
 }
-
-const formatPrice = (price: Decimal | number) => {
-  const value = typeof price === "number" ? price : price.toNumber();
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(value);
-};
 
 const Products = ({ products }: ProductsPros) => {
   const { slug } = useParams<{ slug: string }>();
