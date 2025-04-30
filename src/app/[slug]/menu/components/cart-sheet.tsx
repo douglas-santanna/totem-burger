@@ -11,15 +11,18 @@ import {
 import { CartContext } from "../contexts/cart";
 
 const CartSheet = () => {
-  const { isOpen, toggleCart } = useContext(CartContext);
+  const { isOpen, toggleCart, products } = useContext(CartContext);
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
+          <SheetTitle>Carrinho</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            {products.map((product) => (
+              <p key={product.id}>
+                {product.name} - {product.quantity}
+              </p>
+            ))}
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
