@@ -1,15 +1,17 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
+import { useContext } from "react";
 
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/helpers/format-currency";
 
-import { CartProduct } from "../contexts/cart";
+import { CartContext, CartProduct } from "../contexts/cart";
 
 interface CartItemProps {
   product: CartProduct;
 }
 const CartProductItem = ({ product }: CartItemProps) => {
+  const { decreaseQuantity } = useContext(CartContext);
   return (
     <div className="flex items-center justify-between">
       {/*ESQUERDA*/}
@@ -29,7 +31,11 @@ const CartProductItem = ({ product }: CartItemProps) => {
           <p className="font-sm font-semibold">{formatPrice(product.price)}</p>
           {/*QUNATIDADE*/}
           <div className="item-center flex gap-1 text-center">
-            <Button variant="outline" className="h-7 w-7 rounded-xl">
+            <Button
+              variant="outline"
+              className="h-7 w-7 rounded-xl"
+              onClick={() => decreaseQuantity(product.id)}
+            >
               <Minus />
             </Button>
             <p className="w-7">{product.quantity}</p>
